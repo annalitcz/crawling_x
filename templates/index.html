@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <div class="max-w-4xl mx-auto p-6">
+        <header class="text-center mb-6">
+            <h1 class="text-4xl font-bold text-blue-600">Twitter Search</h1>
+            <p class="text-lg text-gray-600">By Itsnanzzz</p>
+        </header>
+
+        <!-- Form Pencarian -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <form method="POST">
+                <div class="mb-4">
+                    <label for="keyword" class="block text-xl font-semibold text-gray-700 mb-2">Masukkan kata kunci:</label>
+                    <input type="text" id="keyword" name="keyword" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition duration-200">Cari Tweet</button>
+            </form>
+        </div>
+
+        <!-- Hasil Pencarian -->
+        {% if tweets %}
+        <section class="mt-6">
+            <h2 class="text-2xl font-semibold text-gray-800">Hasil Pencarian:</h2>
+            <ul class="space-y-4 mt-4">
+                {% for tweet in tweets %}
+                    <li class="p-4 bg-white border border-gray-200 rounded-lg shadow-md">
+                        <div class="flex items-center space-x-2">
+                            <span class="font-semibold text-blue-600">@{{ tweet.username }}</span>
+                        </div>
+                        <p class="mt-2 text-gray-800">{{ tweet.tweet }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Link untuk Download CSV -->
+            {% if csv_filename %}
+            <div class="mt-6">
+                <a href="{{ url_for('download_file', filename=csv_filename) }}" class="text-blue-600 hover:text-blue-800 font-semibold">
+                    Klik di sini untuk mengunduh hasil pencarian (CSV)
+                </a>
+            </div>
+            {% endif %}
+        </section>
+        {% endif %}
+    </div>
+</body>
+</html>
